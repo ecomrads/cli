@@ -47,21 +47,33 @@ if [ -e "$NPM_ROOT/@ecomrads" ]; then
   rm -rf "$NPM_ROOT/@ecomrads"
 fi
 
-echo "Cloning eComrads CLI from GitHub..."
+VERSION="${TAG:-latest}"
 if [ -n "$TAG" ]; then
-  git clone --depth 1 --branch "$TAG" "$REPO" "$INSTALL_DIR"
+  VERSION="${TAG#v}"
+  TARBALL_URL="https://github.com/ecomrads/cli/releases/download/v${VERSION}/ecomrads-cli-${VERSION}.tgz"
+  echo "Installing eComrads CLI v${VERSION} from GitHub Release..."
+  if curl -fsSL "$TARBALL_URL" -o "$INSTALL_DIR/ecomrads-cli.tgz"; then
+    npm install -g "$INSTALL_DIR/ecomrads-cli.tgz" >/dev/null 2>&1
+  else
+    echo "Release tarball not found; cloning and building from source..."
+    git clone --depth 1 --branch "$TAG" "$REPO" "$INSTALL_DIR/src"
+    cd "$INSTALL_DIR/src"
+    npm install --include=dev
+    npm run build
+    TARBALL="$(npm pack --silent 2>/dev/null | tail -1)"
+    npm install -g "$INSTALL_DIR/src/$TARBALL" >/dev/null 2>&1
+  fi
 else
+  echo "Cloning eComrads CLI from GitHub..."
   git clone --depth 1 "$REPO" "$INSTALL_DIR"
+  cd "$INSTALL_DIR"
+  echo "Installing dependencies and building..."
+  npm install --include=dev
+  npm run build
+  echo "Installing globally..."
+  TARBALL="$(npm pack --silent 2>/dev/null | tail -1)"
+  npm install -g "$INSTALL_DIR/$TARBALL" >/dev/null 2>&1
 fi
-
-cd "$INSTALL_DIR"
-echo "Installing dependencies and building..."
-npm install --include=dev
-npm run build
-
-echo "Installing globally..."
-TARBALL="$(npm pack --silent 2>/dev/null | tail -1)"
-npm install -g "$INSTALL_DIR/$TARBALL" >/dev/null 2>&1
 
 echo ""
 echo "✓ Installation complete"

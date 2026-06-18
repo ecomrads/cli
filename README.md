@@ -7,7 +7,27 @@ Generate product photoshoots, storyboards, videos, static ads, and Virality Anal
 
 ## Install
 
-### npm (recommended)
+### curl (recommended)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh
+```
+
+Pin a version:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh -s -- --tag v0.1.0
+```
+
+### npm from GitHub Release (no npmjs.com account needed)
+
+After a [GitHub Release](https://github.com/ecomrads/cli/releases) is published:
+
+```bash
+npm install -g https://github.com/ecomrads/cli/releases/download/v0.1.0/ecomrads-cli-0.1.0.tgz
+```
+
+### npm registry (when published to npmjs.com)
 
 ```bash
 npm install -g @ecomrads/cli
@@ -19,32 +39,14 @@ One-off without global install:
 npx @ecomrads/cli --help
 ```
 
-Install from GitHub (before npm publish):
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh
-```
-
-Or manually:
+Manual clone + build:
 
 ```bash
 git clone https://github.com/ecomrads/cli.git /tmp/ecomrads-cli
 cd /tmp/ecomrads-cli && npm install && npm run build && npm install -g .
 ```
 
-> **Note:** `npm install -g github:ecomrads/cli` is unreliable on npm 25 (ENOTDIR if you used `npm link`, broken symlinks). Use the curl installer or manual clone above instead.
-
-### curl
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh
-```
-
-Pin a version:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh -s -- --tag v0.1.0
-```
+> **Note:** Do not use `npm install -g github:ecomrads/cli` — it is broken on npm 25.
 
 ## Quickstart
 
