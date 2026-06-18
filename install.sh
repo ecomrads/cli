@@ -40,7 +40,7 @@ fi
 
 NPM_ROOT="$(npm root -g)"
 
-# npm link leaves a symlink that breaks `npm install -g` with ENOTDIR
+# npm link leaves a symlink that breaks global installs with ENOTDIR
 if [ -e "$NPM_ROOT/@ecomrads" ]; then
   echo "Removing previous @ecomrads global install..."
   npm uninstall -g @ecomrads/cli 2>/dev/null || true
@@ -58,8 +58,10 @@ cd "$INSTALL_DIR"
 echo "Installing dependencies and building..."
 npm install --include=dev
 npm run build
+
 echo "Installing globally..."
-npm install -g .
+TARBALL="$(npm pack | tail -1)"
+npm install -g "$INSTALL_DIR/$TARBALL"
 
 echo ""
 echo "Installed: $(ecomrads version 2>/dev/null || true)"
