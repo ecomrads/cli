@@ -19,11 +19,20 @@ One-off without global install:
 npx @ecomrads/cli --help
 ```
 
-Install from GitHub before npm publish:
+Install from GitHub (before npm publish):
 
 ```bash
-npm install -g github:ecomrads/cli
+curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh
 ```
+
+Or manually:
+
+```bash
+git clone https://github.com/ecomrads/cli.git /tmp/ecomrads-cli
+cd /tmp/ecomrads-cli && npm install && npm run build && npm install -g .
+```
+
+> **Note:** `npm install -g github:ecomrads/cli` is unreliable on npm 25 (ENOTDIR if you used `npm link`, broken symlinks). Use the curl installer or manual clone above instead.
 
 ### curl
 
