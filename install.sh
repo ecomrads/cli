@@ -60,13 +60,24 @@ npm install --include=dev
 npm run build
 
 echo "Installing globally..."
-TARBALL="$(npm pack | tail -1)"
-npm install -g "$INSTALL_DIR/$TARBALL"
+TARBALL="$(npm pack --silent 2>/dev/null | tail -1)"
+npm install -g "$INSTALL_DIR/$TARBALL" >/dev/null 2>&1
 
 echo ""
-echo "Installed: $(ecomrads version 2>/dev/null || true)"
+echo "✓ Installation complete"
+echo "  $(ecomrads version 2>/dev/null || echo 'ecomrads installed')"
 echo ""
-echo "Next:"
-echo "  ecomrads auth token <your-supabase-jwt>"
-echo "  ecomrads auth imgbb-key <your-imgbb-key>"
-echo "  ecomrads upload ./product.jpg"
+
+if ecomrads auth status 2>/dev/null | grep -q "authenticated"; then
+  echo "Auth already configured (~/.ecomrads/config.json). You're ready:"
+  echo "  ecomrads upload ./product.jpg"
+  echo "  ecomrads photoshoot --image <url> --prompt \"studio shot\" --wait"
+else
+  echo "Next steps (one-time setup):"
+  echo "  ecomrads auth token <your-supabase-jwt>"
+  echo "  ecomrads auth imgbb-key <your-imgbb-key>"
+  echo "  ecomrads upload ./product.jpg"
+fi
+
+echo ""
+echo "Do not run: npm install -g github:ecomrads/cli (broken on npm 25; you already have the CLI)."
