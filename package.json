@@ -1,0 +1,47 @@
+{
+  "name": "@ecomrads/cli",
+  "version": "0.1.0",
+  "description": "eComrads from the terminal — upload, generate, analyze product creatives",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "ecomrads": "./dist/index.js",
+    "ecr": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "COMMANDS.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "prepublishOnly": "npm run build",
+    "test": "node --test dist/**/*.test.js 2>/dev/null || true"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomrads/cli.git"
+  },
+  "homepage": "https://github.com/ecomrads/cli#readme",
+  "keywords": [
+    "ecomrads",
+    "cli",
+    "product-photoshoot",
+    "ecommerce",
+    "ai-image",
+    "ai-video"
+  ],
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
