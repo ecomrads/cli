@@ -1,6 +1,6 @@
 {
   "name": "@ecomrads/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "eComrads from the terminal — upload, generate, analyze product creatives",
   "license": "MIT",
   "type": "module",
