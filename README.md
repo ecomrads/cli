@@ -24,7 +24,7 @@ curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh -
 After a [GitHub Release](https://github.com/ecomrads/cli/releases) is published:
 
 ```bash
-npm install -g https://github.com/ecomrads/cli/releases/download/v0.1.0/ecomrads-cli-0.1.0.tgz
+npm install -g https://github.com/ecomrads/cli/releases/download/v0.1.2/ecomrads-cli-0.1.1.tgz
 ```
 
 ### npm registry (when published to npmjs.com)
