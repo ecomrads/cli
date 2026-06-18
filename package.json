@@ -5,8 +5,8 @@
   "license": "MIT",
   "type": "module",
   "bin": {
-    "ecomrads": "./dist/index.js",
-    "ecr": "./dist/index.js"
+    "ecomrads": "dist/index.js",
+    "ecr": "dist/index.js"
   },
   "files": [
     "dist",
