@@ -29,6 +29,9 @@
     "url": "git+https://github.com/ecomrads/cli.git"
   },
   "homepage": "https://github.com/ecomrads/cli#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "ecomrads",
     "cli",
