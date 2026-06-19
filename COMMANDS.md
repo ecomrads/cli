@@ -2,13 +2,13 @@
 
 Reference for routes, flags, and request bodies. Every creative command returns a **job** — use `--wait` or `ecomrads job wait <id>`.
 
-Base URL: `ECOMRADS_API_BASE_URL` env or `~/.ecomrads/config.json` (no trailing slash).
+Sign in with `ecomrads auth login` before creative commands. The CLI stores your session in `~/.ecomrads/config.json`.
 
-Default production: `https://backend-ecomrads-production.up.railway.app` (same as eComrads MCP).
+Auth: `Authorization: Bearer <token>` on all API calls (token from `auth login`).
 
-Auth: `Authorization: Bearer <supabase-access_token>` on all FastAPI calls.
+Upload: when signed in, local files upload via the eComrads API — **no ImgBB key needed**. HTTPS URLs pass through unchanged. Optional `IMGBB_API_KEY` fallback if not signed in.
 
-Upload: when signed in (`ecomrads auth login`), local files upload to `POST /uploads/` on FastAPI — **no ImgBB key needed** (same idea as MCP hosting uploads server-side). HTTPS URLs pass through unchanged. Optional `IMGBB_API_KEY` fallback if not signed in.
+Advanced overrides (optional): `ECOMRADS_API_BASE_URL`, `ECOMRADS_ACCESS_TOKEN`, `ECOMRADS_MCP_URL`, `IMGBB_API_KEY`.
 
 ---
 
@@ -17,22 +17,19 @@ Upload: when signed in (`ecomrads auth login`), local files upload to `POST /upl
 | Command | Purpose |
 |---------|---------|
 | `ecomrads auth login` | Sign in via browser (OAuth — recommended) |
-| `ecomrads auth status` | Show auth + API base URL + upload mode |
+| `ecomrads auth status` | Show auth + upload mode |
 | `ecomrads auth logout` | Clear stored credentials |
-| `ecomrads auth token <token>` | Save Supabase JWT manually (advanced) |
+| `ecomrads auth token <token>` | Save access token manually (advanced) |
 | `ecomrads auth imgbb-key <key>` | ImgBB fallback when not signed in (advanced) |
 
 Config file: `~/.ecomrads/config.json`
 
 ```json
 {
-  "api_base_url": "https://backend-ecomrads-production.up.railway.app",
   "access_token": "...",
   "refresh_token": "..."
 }
 ```
-
-Environment overrides: `ECOMRADS_API_BASE_URL`, `ECOMRADS_ACCESS_TOKEN`, `ECOMRADS_MCP_URL`, `IMGBB_API_KEY`.
 
 ---
 
@@ -40,10 +37,10 @@ Environment overrides: `ECOMRADS_API_BASE_URL`, `ECOMRADS_ACCESS_TOKEN`, `ECOMRA
 
 | Command | Backend | Notes |
 |---------|---------|-------|
-| `ecomrads upload <file\|url>` | `POST /uploads/` when signed in | Returns public HTTPS URL for creative commands |
+| `ecomrads upload <file\|url>` | eComrads API when signed in | Returns public HTTPS URL for creative commands |
 | `ecomrads upload <file\|url>` | ImgBB (fallback) | Only if `IMGBB_API_KEY` set and not signed in |
 
-Local files are uploaded via the backend (max 32 MB). HTTPS URLs are passed through as-is.
+Local files are uploaded via the API (max 32 MB). HTTPS URLs are passed through as-is.
 
 ---
 
@@ -62,7 +59,7 @@ Terminal statuses: `completed`, `failed`, `cancelled`.
 
 ## Creative commands
 
-All POST **InnerJSON directly** to FastAPI (no `{ "body": ... }` wrapper — same as ecomrads-mcp HTTP client).
+All POST JSON bodies directly to the eComrads API.
 
 ### `ecomrads photoshoot`
 

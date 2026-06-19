@@ -45,13 +45,15 @@ Sign in opens your browser (same account as ecomrads.com / MCP). No ImgBB API ke
 
 ## Environment
 
+Optional overrides (most users can skip these):
+
 | Variable | Purpose |
 |----------|---------|
-| `ECOMRADS_API_BASE_URL` | FastAPI origin (default: production backend) |
-| `ECOMRADS_ACCESS_TOKEN` | Optional if you use `auth login` |
-| `ECOMRADS_MCP_URL` | OAuth sign-in server (default: `https://mcp.ecomrads.com`) |
+| `ECOMRADS_ACCESS_TOKEN` | Bearer token if not using `auth login` |
+| `ECOMRADS_MCP_URL` | Sign-in server (default: `https://mcp.ecomrads.com`) |
+| `ECOMRADS_API_BASE_URL` | API origin override (local development only) |
 
-Config file: `~/.ecomrads/config.json`
+Session config: `~/.ecomrads/config.json`
 
 ## Commands
 
