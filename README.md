@@ -3,17 +3,23 @@
 [![npm](https://img.shields.io/npm/v/@ecomrads/cli?style=flat-square)](https://www.npmjs.com/package/@ecomrads/cli)
 [![license](https://img.shields.io/github/license/ecomrads/cli?style=flat-square)](./LICENSE)
 
-Generate product photoshoots, storyboards, videos, static ads, and Virality Analysis from the terminal — powered by [eComrads](https://ecomrads.com).
+Generate product photoshoots, storyboards, videos, static ads, and Virality Analysis from the terminal — powered by the [eComrads](https://ecomrads.com) API.
 
 ## Install
 
-**npm** (Mac, Linux, Windows):
+### npm (recommended)
 
 ```bash
 npm install -g @ecomrads/cli
 ```
 
-**curl** (Mac/Linux):
+One-off without global install:
+
+```bash
+npx @ecomrads/cli --help
+```
+
+### curl (Mac/Linux)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh
@@ -22,31 +28,37 @@ curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh
 Pin a version:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh -s -- --tag v0.1.3
+curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh -s -- --tag v0.1.1
 ```
 
-One-off:
-
-```bash
-npx @ecomrads/cli --help
-```
+> On Windows, use `npm install -g @ecomrads/cli`.
 
 ## Quickstart
 
 ```bash
 ecomrads auth login
 ecomrads upload ./product.jpg
-ecomrads photoshoot --image <url> --prompt "clean studio hero shot" --aspect-ratio 4:5 --wait
+ecomrads photoshoot --image <upload-url> --prompt "clean studio hero shot" --aspect-ratio 4:5 --wait
 ```
 
-Sign in opens your browser (same account as ecomrads.com / MCP). No ImgBB key needed when signed in.
+Sign in opens your browser (same account as ecomrads.com / MCP). No ImgBB API key needed when signed in.
+
+## Environment
+
+| Variable | Purpose |
+|----------|---------|
+| `ECOMRADS_API_BASE_URL` | FastAPI origin (default: production backend) |
+| `ECOMRADS_ACCESS_TOKEN` | Optional if you use `auth login` |
+| `ECOMRADS_MCP_URL` | OAuth sign-in server (default: `https://mcp.ecomrads.com`) |
+
+Config file: `~/.ecomrads/config.json`
 
 ## Commands
 
 | Command | Purpose |
 |---------|---------|
 | `ecomrads auth login` | Sign in via browser |
-| `ecomrads upload` | Upload a product image |
+| `ecomrads upload` | Upload image file or URL |
 | `ecomrads photoshoot` | Product image edit |
 | `ecomrads storyboard` | 9-angle storyboard |
 | `ecomrads video` | Image-to-video |
@@ -55,15 +67,16 @@ Sign in opens your browser (same account as ecomrads.com / MCP). No ImgBB key ne
 | `ecomrads recreate` | Recreate competitor-style ad |
 | `ecomrads analyze` | Virality Analysis |
 | `ecomrads spy` | Meta Ads Library |
-| `ecomrads job` | Inspect / wait on jobs |
+| `ecomrads job` | Get / wait on jobs |
+| `ecomrads version` | Print version |
 
 Full reference: [COMMANDS.md](./COMMANDS.md)
 
 ## Related
 
-- **npm**: [@ecomrads/cli](https://www.npmjs.com/package/@ecomrads/cli)
+- **npm package**: [@ecomrads/cli](https://www.npmjs.com/package/@ecomrads/cli)
 - **Agent skills**: [ecomrads/skills](https://github.com/ecomrads/skills)
-- **MCP**: `https://mcp.ecomrads.com/mcp`
+- **MCP connector**: `https://mcp.ecomrads.com/mcp`
 
 ## License
 
