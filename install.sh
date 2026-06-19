@@ -86,8 +86,7 @@ if ecomrads auth status 2>/dev/null | grep -q "authenticated"; then
   echo "  ecomrads photoshoot --image <url> --prompt \"studio shot\" --wait"
 else
   echo "Next steps (one-time setup):"
-  echo "  ecomrads auth token <your-supabase-jwt>"
-  echo "  ecomrads auth imgbb-key <your-imgbb-key>"
+  echo "  ecomrads auth login"
   echo "  ecomrads upload ./product.jpg"
 fi
 

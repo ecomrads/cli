@@ -4,6 +4,7 @@ export const DEFAULT_API_BASE = "https://backend-ecomrads-production.up.railway.
 export interface Config {
   api_base_url: string;
   access_token: string;
+  refresh_token?: string;
   imgbb_api_key?: string;
 }
 
@@ -38,6 +39,7 @@ export async function loadConfig(): Promise<Config> {
     const fileCfg = JSON.parse(raw) as Partial<Config>;
     if (fileCfg.api_base_url) cfg.api_base_url = fileCfg.api_base_url.replace(/\/+$/, "");
     if (fileCfg.access_token) cfg.access_token = fileCfg.access_token;
+    if (fileCfg.refresh_token) cfg.refresh_token = fileCfg.refresh_token;
     if (fileCfg.imgbb_api_key) cfg.imgbb_api_key = fileCfg.imgbb_api_key;
   } catch (err) {
     const code = (err as NodeJS.ErrnoException).code;
@@ -69,7 +71,7 @@ export function isUploadConfigured(cfg: Config): boolean {
 export async function requireAuth(): Promise<Config> {
   const cfg = await loadConfig();
   if (!isAuthenticated(cfg)) {
-    throw new Error("not authenticated — run: ecomrads auth token <access-token>");
+    throw new Error("not authenticated — run: ecomrads auth login");
   }
   return cfg;
 }

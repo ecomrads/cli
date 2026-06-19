@@ -8,7 +8,7 @@ Default production: `https://backend-ecomrads-production.up.railway.app` (same a
 
 Auth: `Authorization: Bearer <supabase-access_token>` on all FastAPI calls.
 
-Upload uses **ImgBB** (same as MCP) — requires `IMGBB_API_KEY` env or `imgbb_api_key` in config. Upload does **not** hit FastAPI.
+Upload: when signed in (`ecomrads auth login`), local files upload to `POST /uploads/` on FastAPI — **no ImgBB key needed** (same idea as MCP hosting uploads server-side). HTTPS URLs pass through unchanged. Optional `IMGBB_API_KEY` fallback if not signed in.
 
 ---
 
@@ -16,11 +16,11 @@ Upload uses **ImgBB** (same as MCP) — requires `IMGBB_API_KEY` env or `imgbb_a
 
 | Command | Purpose |
 |---------|---------|
-| `ecomrads auth login` | Browser OAuth (coming soon) |
-| `ecomrads auth token <token>` | Save Supabase access token (Bearer JWT) |
-| `ecomrads auth imgbb-key <key>` | Save ImgBB key for `upload` |
-| `ecomrads auth status` | Show auth + API base URL + upload config |
-| `ecomrads auth logout` | Clear stored access token |
+| `ecomrads auth login` | Sign in via browser (OAuth — recommended) |
+| `ecomrads auth status` | Show auth + API base URL + upload mode |
+| `ecomrads auth logout` | Clear stored credentials |
+| `ecomrads auth token <token>` | Save Supabase JWT manually (advanced) |
+| `ecomrads auth imgbb-key <key>` | ImgBB fallback when not signed in (advanced) |
 
 Config file: `~/.ecomrads/config.json`
 
@@ -28,11 +28,11 @@ Config file: `~/.ecomrads/config.json`
 {
   "api_base_url": "https://backend-ecomrads-production.up.railway.app",
   "access_token": "...",
-  "imgbb_api_key": "..."
+  "refresh_token": "..."
 }
 ```
 
-Environment overrides: `ECOMRADS_API_BASE_URL`, `ECOMRADS_ACCESS_TOKEN`, `IMGBB_API_KEY`.
+Environment overrides: `ECOMRADS_API_BASE_URL`, `ECOMRADS_ACCESS_TOKEN`, `ECOMRADS_MCP_URL`, `IMGBB_API_KEY`.
 
 ---
 
@@ -40,9 +40,10 @@ Environment overrides: `ECOMRADS_API_BASE_URL`, `ECOMRADS_ACCESS_TOKEN`, `IMGBB_
 
 | Command | Backend | Notes |
 |---------|---------|-------|
-| `ecomrads upload <file\|url>` | ImgBB (`api.imgbb.com`) | Returns public HTTPS URL — copy into all creative commands |
+| `ecomrads upload <file\|url>` | `POST /uploads/` when signed in | Returns public HTTPS URL for creative commands |
+| `ecomrads upload <file\|url>` | ImgBB (fallback) | Only if `IMGBB_API_KEY` set and not signed in |
 
-Local files are base64-encoded and sent to ImgBB (max 32 MB). HTTPS URLs are passed through to ImgBB.
+Local files are uploaded via the backend (max 32 MB). HTTPS URLs are passed through as-is.
 
 ---
 

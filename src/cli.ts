@@ -9,7 +9,7 @@ import {
 } from "./commands/core.js";
 import { defaultGlobals, parseDuration } from "./globals.js";
 
-export const VERSION = "0.1.0";
+import { VERSION } from "./version.js";
 
 export function buildProgram(): Command {
   const globals = { ...defaultGlobals };

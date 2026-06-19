@@ -7,27 +7,7 @@ Generate product photoshoots, storyboards, videos, static ads, and Virality Anal
 
 ## Install
 
-### curl (recommended)
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh
-```
-
-Pin a version:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh -s -- --tag v0.1.0
-```
-
-### npm from GitHub Release (no npmjs.com account needed)
-
-After a [GitHub Release](https://github.com/ecomrads/cli/releases) is published:
-
-```bash
-npm install -g https://github.com/ecomrads/cli/releases/download/v0.1.2/ecomrads-cli-0.1.1.tgz
-```
-
-### npm registry (when published to npmjs.com)
+### npm (recommended)
 
 ```bash
 npm install -g @ecomrads/cli
@@ -39,6 +19,24 @@ One-off without global install:
 npx @ecomrads/cli --help
 ```
 
+### curl (Mac/Linux)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh
+```
+
+Pin a version:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ecomrads/cli/main/install.sh | sh -s -- --tag v0.1.3
+```
+
+### GitHub Release tarball
+
+```bash
+npm install -g https://github.com/ecomrads/cli/releases/download/v0.1.3/ecomrads-cli-0.1.3.tgz
+```
+
 Manual clone + build:
 
 ```bash
@@ -46,15 +44,14 @@ git clone https://github.com/ecomrads/cli.git /tmp/ecomrads-cli
 cd /tmp/ecomrads-cli && npm install && npm run build && npm install -g .
 ```
 
-> **Note:** Do not use `npm install -g github:ecomrads/cli` — it is broken on npm 25.
+> **Note:** Do not use `npm install -g github:ecomrads/cli` — it is broken on npm 25. On Windows, use `npm install -g @ecomrads/cli`.
 
 ## Quickstart
 
-Authenticate:
+Sign in (opens browser — same account as ecomrads.com / MCP):
 
 ```bash
-ecomrads auth token "$ECOMRADS_ACCESS_TOKEN"   # Supabase JWT (same as MCP Bearer)
-ecomrads auth imgbb-key "$IMGBB_API_KEY"       # for upload
+ecomrads auth login
 ```
 
 Upload and generate:
@@ -64,13 +61,16 @@ ecomrads upload ./product.jpg
 ecomrads photoshoot --image <upload-url> --prompt "clean studio hero shot" --aspect-ratio 4:5 --wait
 ```
 
+
+
 ## Environment
 
 | Variable | Purpose |
 |----------|---------|
 | `ECOMRADS_API_BASE_URL` | FastAPI origin (default: production Railway backend) |
-| `ECOMRADS_ACCESS_TOKEN` | Supabase access token for API calls |
-| `IMGBB_API_KEY` | ImgBB key for `upload` |
+| `ECOMRADS_ACCESS_TOKEN` | Supabase access token (optional if you use `auth login`) |
+| `ECOMRADS_MCP_URL` | OAuth sign-in server (default: `https://mcp.ecomrads.com`) |
+
 
 Config file: `~/.ecomrads/config.json`
 
@@ -78,8 +78,8 @@ Config file: `~/.ecomrads/config.json`
 
 | Command | Purpose |
 |---------|---------|
-| `ecomrads auth` | token / imgbb-key / status / logout |
-| `ecomrads upload` | upload image file or URL via ImgBB |
+| `ecomrads auth` | login / status / logout (token & imgbb-key for advanced use) |
+| `ecomrads upload` | upload image file or URL (backend when signed in) |
 | `ecomrads photoshoot` | product image edit (`/post/edit`) |
 | `ecomrads storyboard` | 9-angle storyboard (`/post/multi-angles`) |
 | `ecomrads video` | image-to-video (`/post/animate`) |
