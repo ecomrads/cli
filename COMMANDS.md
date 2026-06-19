@@ -38,7 +38,7 @@ Config file: `~/.ecomrads/config.json`
 | Command | Backend | Notes |
 |---------|---------|-------|
 | `ecomrads upload <file\|url>` | eComrads API when signed in | Returns public HTTPS URL for creative commands |
-| `ecomrads upload <file\|url>` | ImgBB (fallback) | Only if `IMGBB_API_KEY` set and not signed in |
+
 
 Local files are uploaded via the API (max 32 MB). HTTPS URLs are passed through as-is.
 
